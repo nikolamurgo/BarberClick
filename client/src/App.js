@@ -1,9 +1,12 @@
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import HomePage from './pages/HomePage'
 
 function App(){
   return(
     <div>
-      <h1>BarberClick</h1>
+      <HomePage />
     </div>
   )
 }
