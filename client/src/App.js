@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage'
 
 function App(){
   return(
-    <div>
+    <div data-bs-theme='dark' className='bg-custom-dark min-vh-100'>
       <HomePage />
     </div>
   )

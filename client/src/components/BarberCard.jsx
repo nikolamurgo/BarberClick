@@ -1,4 +1,5 @@
 import axios from 'axios'
+import '../styles/HomepageStyles.css'
 import { useEffect, useState } from 'react'
 
 function BarberCard() {
@@ -25,31 +26,37 @@ function BarberCard() {
     }
 
     return (
-        <div>
-            <h1 className="selectbarbertitle text-center mb-4">Select your Barber</h1>
+        <div className='container-fluid px-3'>
+            <h1 className="selectbarbertitle text-center mb-4 text-light">Select your Barber</h1>
 
-            <div className="d-flex justify-content-center flex-wrap gap-3 mt-3">
+            <div className="row justify-content-center g-3">
                 {barbers.length > 0 ? 
                 (
                     barbers.map((barber) => (
-                        <div key={barber.user_id}>
-                            <div className={`card ${selectedBarber?.user_id === barber.user_id ? 'border-success' : ''}`}
+                        <div key={barber.user_id} className="col-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                            <div className={`card h-100 bg-dark ${selectedBarber?.user_id === barber.user_id ? 'border-primary' : ''}`}
                                 style={{ 
-                                    width: '18rem', 
+                                    width: '100%', 
                                     cursor: 'pointer',
                                     transform: selectedBarber?.user_id === barber.user_id ? 'scale(1.05)' : 'scale(1)',
-                                    transition: 'all 0.3s ease'
+                                    transition: 'all 0.3s ease',
+                                    maxWidth: '250px',
+                                    margin: '0 auto'
                                 }}
                                 onClick={() => handleBarberSelect(barber)}>
-                                <img className="card-img-top" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Barber"/>
-                                <div className="card-body">
+                                <img className="card-img-top" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" style={{
+                                    height: 'auto', objectFit: 'cover'
+                                }} alt="Barber"/>
+                                <div className="card-body p-2 text-center">
                                     <h5 className="card-title text-center">{barber.first_name} {barber.last_name}</h5>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p>No barbers available</p>
+                    <div className="col-12">
+                        <p className="text-light text-center">No barbers available</p>
+                    </div>
                 )}
             </div>
         </div>

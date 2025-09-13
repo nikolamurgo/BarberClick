@@ -1,7 +1,37 @@
 .navtitle{
-    background-color: #5569ff;
+    background-color: #4e40e8;
 }
 
 .selectbarbertitle{
     margin-top: 5vh;
+}
+
+.bg-custom-dark {
+    background-color: #121212 !important;
+}
+
+
+@media (max-width: 767px) {
+    .card {
+        max-width: 160px !important;
+    }
+    
+    .card img {
+        height: 150px !important;
+    }
+    
+    .card-title {
+        font-size: 0.9rem !important;
+    }
+    
+    .btn {
+        font-size: 0.8rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .card {
+        min-height: 300px;
+    }
 }
