@@ -10,12 +10,14 @@ const PORT = process.env.PORT || 3001
 
 // import routes
 const userRoutes = require('./routes/users')
+const serviceRoutes = require('./routes/services')
 
 app.use(cors())
 app.use(express.json())
 
 // Routes
 app.use('/api/users', userRoutes)
+app.use('/api/services', serviceRoutes)
 
 
 app.get("/", (req,res)=>{

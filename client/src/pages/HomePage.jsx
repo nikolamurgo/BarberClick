@@ -1,5 +1,6 @@
 import Header from '../components/Header'
 import BarberCard from '../components/BarberCard'
+import ServiceSelection from '../components/serviceSelection'
 import { useState } from 'react'
 
 function HomePage(){
@@ -31,6 +32,15 @@ function HomePage(){
     const handleBarberSelect = (barber) => {
         setSelectedBarber(barber)
     }
+    const handleServiceSelect = (service) => {
+        setSelectedService(service)
+    }
+
+    // function to handle previous step and reset selectedService
+    const handleServicePrevious = () => {
+        setSelectedService(null);
+        handlePrevious();
+    }
 
     // fuction to render the components based on the step
     const renderCurrentStep = () => {
@@ -48,7 +58,13 @@ function HomePage(){
             case 2:
                 return(
                     // TO BE IMPLEMENTED
-                   <h2>Step 2: Select Service</h2> 
+                   <ServiceSelection
+                        selectedService = {selectedService}
+                        onServiceSelect = {handleServiceSelect}
+                        onNext = {handleNext}
+                        onPrevious = {handleServicePrevious}
+                        canGoNext = {selectedService !== null}
+                    />
                 )
             case 3:
                 return(
