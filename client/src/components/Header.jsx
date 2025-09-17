@@ -3,7 +3,7 @@ const logo = require('../assets/logo-bc.png')
 
 function Header() {
     return (
-        <nav className="navbar navbar-dark navtitle border-bottom border-secondary">
+        <nav className="navbar navbar-dark navtitle border-bottom">
             <div className="container">
                 {/* Logo + Title on the left */}
                 <a className="navbar-brand d-flex align-items-center">

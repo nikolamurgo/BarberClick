@@ -2,10 +2,9 @@ import axios from 'axios'
 import '../styles/HomepageStyles.css'
 import { useEffect, useState } from 'react'
 
-function BarberCard() {
+function BarberCard({selectedBarber, onBarberSelect, onNext, canGoNext}) {
 
     const [barbers, setBarbers] = useState([])
-    const [selectedBarber, setSelectedBarber] = useState(null)
 
     // update on every change
     useEffect(() => {
@@ -22,11 +21,11 @@ function BarberCard() {
     }
 
     const handleBarberSelect = (barber) =>{
-        setSelectedBarber(barber)
+        onBarberSelect(barber)
     }
 
     return (
-        <div className='container-fluid px-3'>
+        <div className='container-fluid px-3 py-5'>
             <h1 className="selectbarbertitle text-center mb-4 text-light">Select your Barber</h1>
 
             <div className="row justify-content-center g-3">
@@ -58,6 +57,14 @@ function BarberCard() {
                         <p className="text-light text-center">No barbers available</p>
                     </div>
                 )}
+            </div>
+            <div className='d-flex justify-content-center mt-5'>
+                <button
+                    type='button'
+                    className={`btn btn-lg ${canGoNext ? 'btn-primary' : 'btn-secondary'}`}
+                    disabled={!canGoNext}
+                    onClick={onNext}
+                >Next</button>
             </div>
         </div>
     )
