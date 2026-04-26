@@ -1,23 +1,33 @@
 import '../styles/HomepageStyles.css'
 const logo = require('../assets/logo-bc.png')
 
-function Header() {
+function Header({currentView = 'booking', onViewChange}) {
+    const handleViewClick = (event, view) => {
+        if (!onViewChange) {
+            return
+        }
+
+        event.preventDefault()
+        onViewChange(view)
+    }
+
     return (
-        <nav className="navbar navbar-dark navtitle border-bottom">
+        <nav className="navbar navbar-dark navtitle">
             <div className="container">
-                {/* Logo + Title on the left */}
-                <a className="navbar-brand d-flex align-items-center">
-                    <img height='70' width='auto' src={logo}></img>
-                    <span className="fs-3"><b>BarberClick</b></span>
+                <a className="navbar-brand brand-lockup d-flex align-items-center" href="/" onClick={(event) => handleViewClick(event, 'booking')}>
+                    <img className="brand-logo" src={logo} alt="BarberClick logo" />
+                    <span className="brand-name">BarberClick</span>
                 </a>
 
-                {/* Links on the right */}
-                <ul className="navbar-nav ms-auto flex-row">
+                <ul className="navbar-nav ms-auto flex-row nav-actions">
                     <li className="nav-item">
-                        <a className="nav-link me-3">About</a>
+                        <a className={`nav-link ${currentView === 'booking' ? 'active' : ''}`} href="#booking" onClick={(event) => handleViewClick(event, 'booking')}>Book</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link">Contact</a>
+                        <a className={`nav-link ${currentView === 'admin' ? 'active' : ''}`} href="#admin" onClick={(event) => handleViewClick(event, 'admin')}>Admin</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>

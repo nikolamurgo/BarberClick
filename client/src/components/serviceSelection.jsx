@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import API_URL from '../config/api'
 
 function ServiceSelection({selectedService, onServiceSelect, onNext, onPrevious, canGoNext}){
 
@@ -11,7 +12,7 @@ function ServiceSelection({selectedService, onServiceSelect, onNext, onPrevious,
 
     const fetchServices = async () =>{
         try {
-            const result = await axios.get('http://localhost:5001/api/services/all')
+            const result = await axios.get(`${API_URL}/services/all`)
             setServices(result.data)
         } catch (error) {
             console.error('error fetching services', error)
@@ -23,69 +24,81 @@ function ServiceSelection({selectedService, onServiceSelect, onNext, onPrevious,
     }
 
     return(
-        <div className='container-fluid px-3 py-5'>
-            <h1 className="text-center mb-4 text-light">Select a Service</h1>
-
-            <div className="row justify-content-center">
-                <div className="col-lg-8 col-xl-6">
-                    {services.length > 0 ? 
-                    (
-                        services.map((service) => {
-                            const isSelected = selectedService?.service_id === service.service_id
-                            
-                            return (
-                                <div key={service.service_id} className="mb-3">
-                                    <div 
-                                        className={`border rounded p-3 bg-dark ${isSelected ? 'border-primary border-1' : 'border-secondary'}`}
-                                        style={{ 
-                                            cursor: 'pointer',
-                                            transform: isSelected ? 'scale(1.01)' : 'scale(1)',
-                                            transition: 'all 0.3s ease'
-                                        }}
-                                        onClick={() => handleServiceSelect(service)}
-                                    >
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="flex-grow-1">
-                                                <div className="d-flex align-items-center mb-1">
-                                                    <h5 className="text-light mb-0 me-3">{service.title}</h5>
-                                                </div>
-                                                <p className="text-muted small mb-1">{service.description}</p>
-                                                <div className="d-flex align-items-center text-info small">
-                                                    <i className="bi bi-clock me-1"></i>
-                                                    {service.duration} minutes
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="text-end">
-                                                <h4 className="text-light mb-0">{service.price}€</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    ) : (
-                        <div className="text-center">
-                            <p className="text-light">No services available</p>
+        <section className='booking-section'>
+            <div className="container">
+                <div className="booking-shell narrow-shell">
+                    <div className="section-heading">
+                        <div>
+                            <div className="section-kicker">Step 2</div>
+                            <h1 className="booking-title">Select a service</h1>
+                            <p className="booking-subtitle">Compare duration and price before choosing your haircut.</p>
                         </div>
-                    )}
+                        {selectedService && (
+                            <div className="selected-pill">
+                                <i className="bi bi-check2-circle"></i>
+                                {selectedService.title}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="service-list">
+                        {services.length > 0 ? 
+                        (
+                            services.map((service) => {
+                                const isSelected = selectedService?.service_id === service.service_id
+
+                                return (
+                                    <button
+                                        type="button"
+                                        key={service.service_id}
+                                        className={`selection-card service-card ${isSelected ? 'selected' : ''}`}
+                                        onClick={() => handleServiceSelect(service)}
+                                        aria-pressed={isSelected}
+                                    >
+                                        <span className="service-icon"><i className="bi bi-scissors"></i></span>
+                                        <span className="service-copy">
+                                            <span className="service-title">{service.title}</span>
+                                            <span className="service-description">{service.description}</span>
+                                            <span className="service-duration">
+                                                <i className="bi bi-clock"></i>
+                                                {service.duration} minutes
+                                            </span>
+                                        </span>
+                                        <span className="service-price">{service.price}€</span>
+                                        <span className="selection-check"><i className="bi bi-check-lg"></i></span>
+                                    </button>
+                                )
+                            })
+                        ) : (
+                            <div className="empty-state">
+                                <i className="bi bi-tag"></i>
+                                <p>No services available right now.</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className='d-flex justify-content-center gap-3 mt-5'>
+                        <button 
+                            type='button' 
+                            className='btn btn-outline-light btn-lg action-btn'
+                            onClick={onPrevious}
+                        >
+                            <i className="bi bi-arrow-left"></i>
+                            Previous
+                        </button>
+                        <button
+                            type='button'
+                            className='btn btn-primary btn-lg action-btn'
+                            disabled={!canGoNext}
+                            onClick={onNext}
+                        >
+                            Continue
+                            <i className="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            
-            <div className='d-flex justify-content-center gap-3 mt-5'>
-                <button 
-                    type='button' 
-                    className='btn btn-outline-light btn-lg'
-                    onClick={onPrevious}
-                >Previous</button>
-                <button
-                    type='button'
-                    className={`btn btn-lg ${canGoNext ? 'btn-primary' : 'btn-secondary'}`}
-                    disabled={!canGoNext}
-                    onClick={onNext}
-                >Next</button>
-            </div>
-        </div>
+        </section>
     )
 }
 
